@@ -36,35 +36,35 @@ def convert_df_to_array(df):
     data = np.squeeze(data)
     return data
 
-def plot_pdf(data):
-    # Estimate  parameters (mean and standard deviation) of the normal distribution that best fits the data using maximum likelihood estimation (MLE).
-    sample_mean, sample_std_dev = norm.fit(data)
-    dist = norm(sample_mean, sample_std_dev)
-    values = [value for value in range(np.min(data), np.max(data))]
-    probabilities = [dist.pdf(value) for value in values]
+data = convert_df_to_array(df = df_combined)
 
-    # Plot the PDF
-    plt.figure(figsize = (14, 8))
-    xmin, xmax = plt.xlim()
-    plt.text(120000, 3200, f'Mean Salary: {sample_mean:.2f}\n mean probabilities: {np.mean(probabilities)}', fontsize=10)
-    
-    plt.plot(values, probabilities)
-    plt.hist(data, bins = 30, label='PDF', alpha = 0.4, color = 'g')
-    plt.title('Probability Density Function of Salary Distribution')
-    plt.xlabel('Salary')
-    plt.ylabel('Probability Density')
-    
-    
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    
-    return sample_mean, sample_std_dev, probabilities
 
-X = convert_df_to_array(df = df_combined)
+plt.figure(figsize=(14, 8))
 
-mean, std_dev, probabilities = plot_pdf(data = X)
+# Plot the histogram.
+plt.hist(data, bins=30, density=True, alpha=0.6, color='g', edgecolor='black', label = 'PDF')
+
+# Fit a normal distribution to the data
+mu, std = norm.fit(data)
+
+# Plot the PDF
+xmin, xmax = plt.xlim()
+x = np.linspace(xmin, xmax, 100)
+p = norm.pdf(x, mu, std)
+plt.plot(x, p, 'k', linewidth=2)
+plt.text(150000, 0.00002, f'Mean Salary: {mu:.2f}', fontsize=10)
+    # plt.text(120000, 3200, f'Mean Salary: {sample_mean:.2f}\n mean probabilities: {np.mean(probabilities)}', fontsize=10)
+
+
+plt.title('Probability Density Function of Salary Distribution')
+plt.xlabel('Salary')
+plt.ylabel('Probability Density')
+
+
+plt.legend()
+plt.grid(True)
+plt.show()
 
 
 # Display the result
-print(f"The mean annual salary is: {round(mean, 2)}")
+print(f"The mean annual salary is: {round(mu, 2)}")
