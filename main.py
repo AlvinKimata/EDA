@@ -1,13 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Salary Analysis Notebook
-# ***
-# 
-# ## Overview
-# This Jupyter Notebook analyzes salary data from a European country. The dataset consists of samples of annual salaries. We aim to explore the distribution and calculate the mean salary.
-# 
-# ## Contents
+# # Salary Analysis
+# This code analyzes salary data from a European country. The dataset consists of samples of annual salaries. We aim to explore the distribution and calculate the mean salary.
+#Contents
 # 1. **Data Loading:** Load and combine salary data from multiple CSV files.
 # 2. **Exploratory Data Analysis (EDA):** Explore the distribution of salaries through visualizations and summary statistics.
 # 3. **Mean Salary Calculation:** Calculate the mean annual salary based on the dataset.
@@ -33,12 +29,6 @@ df_list = [load_and_rename_csv(file_path) for file_path in file_paths]
 # Concatenate the DataFrames
 df_combined = pd.concat(df_list, ignore_index=True)
 
-# Display the combined DataFrame
-print(df_combined.head())
-
-
-#Check for null values.
-print(df_combined.isnull().sum())
 
 def convert_df_to_array(df):
     data = df.values.tolist()
